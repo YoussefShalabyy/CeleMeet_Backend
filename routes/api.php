@@ -75,6 +75,15 @@ Route::prefix('v1')->group(function (): void {
     // Webhook must be public so Paymob servers can reach it
     Route::post('payments/paymob/webhook', [\App\Modules\Payment\Controllers\PaymobController::class, 'webhook']);
 
+    // ─── Phase 6: Follow System ──────────────────────────────────────────
+    Route::middleware('auth:api')->group(function (): void {
+        // Follow / unfollow a creator
+        Route::post('creators/{id}/follow',    [\App\Modules\User\Controllers\FollowController::class, 'follow'])->whereNumber('id');
+        Route::delete('creators/{id}/follow',  [\App\Modules\User\Controllers\FollowController::class, 'unfollow'])->whereNumber('id');
+        // List who the authenticated user follows
+        Route::get('users/me/following', [\App\Modules\User\Controllers\FollowController::class, 'following']);
+    });
+
     // ─── Phase 7: Posts ─────────────────────────────────────────────────
     // Route::prefix('posts')->group(base_path('routes/api/posts.php'));
 

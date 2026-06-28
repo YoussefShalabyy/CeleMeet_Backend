@@ -1,9 +1,9 @@
 # CeleMeet — Project Status
-Last Updated: 2026-06-27
+Last Updated: 2026-06-29
 
 ---
 
-## Current Phase: Phase 6 — Follow System (⏳ Pending)
+## Current Phase: Phase 7 — Content: Posts (⏳ Pending)
 
 ---
 
@@ -17,7 +17,7 @@ Last Updated: 2026-06-27
 | 3 | Media Storage (Cloudinary) | ✅ Complete | 2026-06-28 |
 | 4 | Wallet & Coin Packages | ✅ Complete | 2026-06-28 |
 | 5 | Payment & Coin Purchase | ✅ Complete | 2026-06-28 |
-| 6 | Follow System | ⏳ Pending | — |
+| 6 | Follow System | ✅ Complete | 2026-06-29 |
 | 7 | Content: Posts | ⏳ Pending | — |
 | 8 | Content: Stories | ⏳ Pending | — |
 | 9 | Engagement: Likes & Comments | ⏳ Pending | — |
@@ -129,27 +129,128 @@ Last Updated: 2026-06-27
 
 ---
 
-## Default Migrations Applied
+## Phase 1 — Authentication (✅ COMPLETE)
 
-| Migration | Phase | Status |
-|---|---|---|
-| `0001_01_01_000000_create_users_table` | Default Laravel | ✅ Applied 2026-06-27 |
-| `0001_01_01_000001_create_cache_table` | Default Laravel | ✅ Applied 2026-06-27 |
-| `0001_01_01_000002_create_jobs_table` | Default Laravel | ✅ Applied 2026-06-27 |
+### Key Deliverables
+- JWT authentication via `php-open-source-saver/jwt-auth`
+- Register with email/phone in single `identifier` field
+- Login with email/phone + password
+- Google OAuth (login or register in one shot via `firstOrCreate`)
+- `POST /api/v1/auth/register`, `login`, `google`, `logout`, `GET /auth/me`
+- `AuthService`, `AuthUserResource`, `LoginRequest`, `RegisterRequest`
+- `UserObserver` automatically creates Wallet on user registration
 
-> **Note:** These are Laravel's default scaffold migrations.
-> Phase 1 will add: `users` column extensions, `social_accounts`, `refresh_tokens`.
+### Tests: 10 passing
 
 ---
 
-## Known Schema Gaps (To Be Resolved in Future Phases)
+## Phase 2 — User & Creator Profiles (✅ COMPLETE)
 
-| Gap | Phase | Status |
+### Key Deliverables
+- `GET/PUT /api/v1/users/me` — view and update own user profile
+- `GET /api/v1/creators`, `GET /api/v1/creators/{id}` — public creator listing
+- `PUT /api/v1/creator/profile` — creator-only profile update
+- `GET /api/v1/categories` — list all categories
+- `UserService`, `CreatorProfileService`, `CategoryService`
+- `UserResource`, `CreatorProfileResource`, `CreatorProfileListResource`, `CategoryResource`
+
+### Tests: 12 passing
+
+---
+
+## Phase 3 — Media Storage / Cloudinary (✅ COMPLETE)
+
+### Key Deliverables
+- `CloudinaryAdapter` implementing `MediaStorageInterface`
+- `POST /api/v1/media/upload` — upload files to Cloudinary, store `media_assets` record
+- `DELETE /api/v1/media/{id}` — delete own media
+- `MediaService`, `MediaPolicy`, `MediaAssetResource`
+- `UploadMediaDTO`
+
+### Tests: 8 passing
+
+---
+
+## Phase 4 — Wallet & Coin Packages (✅ COMPLETE)
+
+### Key Deliverables
+- `WalletService` with atomic `credit()`, `deduct()`, `hold()`, `releaseHold()` — all DB-transaction-wrapped
+- Pessimistic locking (`lockForUpdate()`) prevents race conditions
+- `GET /api/v1/wallet`, `GET /api/v1/wallet/transactions` (paginated)
+- `GET /api/v1/coin-packages` (public)
+- `POST/PUT/DELETE /api/v1/admin/coin-packages` (admin only)
+
+### Tests: 18 passing
+
+---
+
+## Phase 5 — Payment & Coin Purchase (✅ COMPLETE)
+
+### Key Deliverables
+- `PaymobAdapter` — initiates Paymob checkout, verifies HMAC webhook signatures
+- `AppleIapAdapter` — verifies Apple App Store receipts with anti-replay protection
+- `PaymentService` — orchestrates both gateways, credits wallet on success
+- `PaymentTransaction` model — immutable fiat-money ledger
+- `POST /api/v1/payments/paymob/initiate` — create checkout URL
+- `POST /api/v1/payments/paymob/webhook` — public, HMAC-verified
+- `POST /api/v1/payments/apple/verify` — iOS IAP receipt verification
+
+### Tests: 4 passing
+
+---
+
+## Phase 6 — Follow System (✅ COMPLETE)
+
+### Key Deliverables
+- `Follow` model linking `users` → `creator_profiles`
+- `FollowObserver` — atomically increments/decrements `creator_profiles.followers_count` on follow/unfollow using `DB::increment/decrement` (never direct assignment)
+- `FollowService` — `follow()` (idempotent), `unfollow()` (safe no-op), `getFollowing()` (paginated)
+- `FollowCreatorDTO`
+- `POST /api/v1/creators/{id}/follow` — follow a creator
+- `DELETE /api/v1/creators/{id}/follow` — unfollow a creator
+- `GET /api/v1/users/me/following` — paginated list of followed creators
+
+### Security
+- Cannot follow self → 422 BusinessException
+- Cannot follow non-existent creator → 404 NotFoundException
+- Unauthenticated requests → 401
+
+### Tests: 11 passing
+
+---
+
+## Migrations Applied
+
+| Migration File | Phase | Status |
 |---|---|---|
-| `follows` table missing from DATABASE_SCHEMA.md | Phase 6 | ⏳ Not started |
-| `likes` table missing from DATABASE_SCHEMA.md | Phase 9 | ⏳ Not started |
-| `comments` table missing from DATABASE_SCHEMA.md | Phase 9 | ⏳ Not started |
-| `withdrawals` table missing from DATABASE_SCHEMA.md | Phase 14 | ⏳ Not started |
+| `0001_01_01_000000_create_users_table` | Default Laravel | ✅ Applied |
+| `0001_01_01_000001_create_cache_table` | Default Laravel | ✅ Applied |
+| `0001_01_01_000002_create_jobs_table` | Default Laravel | ✅ Applied |
+| `2026_06_28_000001_add_uuid_to_users_table` | Phase 1 | ✅ Applied |
+| `2026_06_28_000002_create_social_accounts_table` | Phase 1 | ✅ Applied |
+| `2026_06_28_000003_create_media_assets_table` | Phase 2 | ✅ Applied |
+| `2026_06_28_000004_create_categories_table` | Phase 2 | ✅ Applied |
+| `2026_06_28_000005_create_creator_profiles_table` | Phase 2 | ✅ Applied |
+| `2026_06_28_000006_create_creator_categories_table` | Phase 2 | ✅ Applied |
+| `2026_06_28_000007_create_wallets_table` | Phase 4 | ✅ Applied |
+| `2026_06_28_000008_create_wallet_transactions_table` | Phase 4 | ✅ Applied |
+| `2026_06_28_000009_create_coin_packages_table` | Phase 4 | ✅ Applied |
+| `2026_06_28_000014_create_follows_table` | Phase 6 | ✅ Applied |
+| `2026_06_28_000015_create_payment_transactions_table` | Phase 5 | ✅ Applied |
+
+---
+
+## Test Suite Summary
+
+| Phase | Tests | All Passing |
+|---|---|---|
+| Phase 1 (Auth) | 10 | ✅ |
+| Phase 2 (Profiles) | 12 | ✅ |
+| Phase 3 (Media) | 8 | ✅ |
+| Phase 4 (Wallet) | 18 | ✅ |
+| Phase 5 (Payment) | 4 | ✅ |
+| Phase 6 (Follow) | 11 | ✅ |
+| **Total** | **63** | **✅ All Passing** |
 
 ---
 

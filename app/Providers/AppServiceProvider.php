@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         Model::preventSilentlyDiscardingAttributes(! app()->isProduction());
 
         \App\Models\User::observe(\App\Observers\UserObserver::class);
+        \App\Models\Follow::observe(\App\Observers\FollowObserver::class);
 
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(CreatorProfile::class, CreatorProfilePolicy::class);

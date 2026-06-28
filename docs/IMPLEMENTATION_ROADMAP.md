@@ -8,19 +8,6 @@
 
 ---
 
-## ⚠️ Schema Gap Findings (Must Address)
-
-Before beginning any feature phase, the following tables are **missing from DATABASE_SCHEMA.md V4.0** but are required by the business rules:
-
-| Missing Table | Required By | Phase to Add |
-|---|---|---|
-| `follows` | Follow System (Business Rules) | Phase 5 |
-| `likes` | Comments & Likes (Business Rules) | Phase 6 |
-| `comments` | Comments & Likes (Business Rules) | Phase 6 |
-| `withdrawals` | Withdrawal System (Business Rules) | Phase 12 |
-
-These tables must be designed and added to `DATABASE_SCHEMA.md` before their respective phases begin.
-
 ---
 
 ## Implementation Order Overview
@@ -503,7 +490,7 @@ Following is a prerequisite for feed ranking and notification targeting.
 
 ### Database Impact
 New migrations:
-- `follows` table (**MISSING from schema — must be designed**)
+- `follows` table (defined in V1.0 schema)
 
 ```sql
 CREATE TABLE follows (
@@ -693,8 +680,8 @@ Social engagement is a core retention mechanic.
 
 ### Database Impact
 New migrations:
-- `likes` table (**MISSING from schema — must be designed**)
-- `comments` table (**MISSING from schema — must be designed**)
+- `likes` table (defined in V1.0 schema)
+- `comments` table (defined in V1.0 schema)
 
 ```sql
 -- likes
@@ -1062,7 +1049,7 @@ Without a payout mechanism, creators have no reason to use the platform.
 
 ### Database Impact
 New migrations:
-- `withdrawals` table (**MISSING from schema — must be designed**)
+- `withdrawals` table (defined in V1.0 schema)
 
 ```sql
 CREATE TABLE withdrawals (

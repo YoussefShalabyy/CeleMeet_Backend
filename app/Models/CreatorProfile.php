@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CreatorProfile extends Model
 {
@@ -62,5 +63,10 @@ class CreatorProfile extends Model
             'creator_id',
             'category_id'
         );
+    }
+
+    public function followers(): HasMany
+    {
+        return $this->hasMany(Follow::class, 'creator_id', 'user_id');
     }
 }
