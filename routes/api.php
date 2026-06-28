@@ -43,7 +43,10 @@ Route::prefix('v1')->group(function (): void {
 
 
     // ─── Phase 3: Media ─────────────────────────────────────────────────
-    // Route::prefix('media')->group(base_path('routes/api/media.php'));
+    Route::prefix('media')->middleware('auth:api')->group(function (): void {
+        Route::post('upload', [\App\Modules\Media\Controllers\MediaController::class, 'upload']);
+        Route::delete('{id}', [\App\Modules\Media\Controllers\MediaController::class, 'destroy'])->whereNumber('id');
+    });
 
     // ─── Phase 4: Wallet ────────────────────────────────────────────────
     // Route::prefix('wallet')->group(base_path('routes/api/wallet.php'));

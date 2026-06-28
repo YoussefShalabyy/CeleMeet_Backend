@@ -71,7 +71,7 @@ class FoundationServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             MediaStorageInterface::class,
-            FakeMediaStorage::class,
+            \App\Infrastructure\MediaStorage\CloudinaryAdapter::class,
         );
     }
 

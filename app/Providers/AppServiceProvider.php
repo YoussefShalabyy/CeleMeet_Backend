@@ -26,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(CreatorProfile::class, CreatorProfilePolicy::class);
+        Gate::policy(\App\Models\MediaAsset::class, \App\Modules\Media\Policies\MediaPolicy::class);
     }
 }

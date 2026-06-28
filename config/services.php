@@ -41,4 +41,8 @@ return [
         'client_id' => env('GOOGLE_CLIENT_ID', ''), // Leave empty to skip audience validation in dev
     ],
 
+    'cloudinary' => [
+        'url' => env('CLOUDINARY_URL'),
+    ],
+
 ];
