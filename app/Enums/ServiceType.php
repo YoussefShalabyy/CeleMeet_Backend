@@ -8,6 +8,7 @@ enum ServiceType: string
 {
     case Message = 'message';
     case VoiceMessage = 'voice_message';
+    case VoiceCall = 'voice_call';
     case VideoCall = 'video_call';
     case LiveStream = 'live_stream';
     case MeetGreet = 'meet_greet';

@@ -9,6 +9,7 @@ enum TransactionType: string
     case Recharge = 'recharge';
     case Message = 'message';
     case VoiceMessage = 'voice_message';
+    case VoiceCall = 'voice_call';
     case VideoCall = 'video_call';
     case Subscription = 'subscription';
     case Gift = 'gift';
