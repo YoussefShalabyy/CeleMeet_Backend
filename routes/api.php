@@ -67,7 +67,13 @@ Route::prefix('v1')->group(function (): void {
     });
 
     // ─── Phase 5: Payments ──────────────────────────────────────────────
-    // Route::prefix('payments')->group(base_path('routes/api/payments.php'));
+    Route::middleware('auth:api')->group(function (): void {
+        Route::post('payments/paymob/initiate', [\App\Modules\Payment\Controllers\PaymobController::class, 'initiate']);
+        Route::post('payments/apple/verify', [\App\Modules\Payment\Controllers\AppleIapController::class, 'verify']);
+    });
+    
+    // Webhook must be public so Paymob servers can reach it
+    Route::post('payments/paymob/webhook', [\App\Modules\Payment\Controllers\PaymobController::class, 'webhook']);
 
     // ─── Phase 7: Posts ─────────────────────────────────────────────────
     // Route::prefix('posts')->group(base_path('routes/api/posts.php'));

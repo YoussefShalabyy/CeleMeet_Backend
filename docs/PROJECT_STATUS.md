@@ -3,7 +3,7 @@ Last Updated: 2026-06-27
 
 ---
 
-## Current Phase: Phase 5 — Payment & Coin Purchase (⏳ Pending)
+## Current Phase: Phase 6 — Follow System (⏳ Pending)
 
 ---
 
@@ -16,7 +16,7 @@ Last Updated: 2026-06-27
 | 2 | User & Creator Profiles | ✅ Complete | 2026-06-28 |
 | 3 | Media Storage (Cloudinary) | ✅ Complete | 2026-06-28 |
 | 4 | Wallet & Coin Packages | ✅ Complete | 2026-06-28 |
-| 5 | Payment & Coin Purchase | ⏳ Pending | — |
+| 5 | Payment & Coin Purchase | ✅ Complete | 2026-06-28 |
 | 6 | Follow System | ⏳ Pending | — |
 | 7 | Content: Posts | ⏳ Pending | — |
 | 8 | Content: Stories | ⏳ Pending | — |

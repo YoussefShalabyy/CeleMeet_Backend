@@ -45,4 +45,15 @@ return [
         'url' => env('CLOUDINARY_URL'),
     ],
 
+    'paymob' => [
+        'api_key' => env('PAYMOB_API_KEY'),
+        'hmac_secret' => env('PAYMOB_HMAC_SECRET'),
+        'integration_id' => env('PAYMOB_INTEGRATION_ID'),
+    ],
+
+    'apple' => [
+        'bundle_id' => env('APPLE_BUNDLE_ID'),
+        'shared_secret' => env('APPLE_SHARED_SECRET'),
+    ],
+
 ];
