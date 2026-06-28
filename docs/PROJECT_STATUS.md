@@ -3,7 +3,7 @@ Last Updated: 2026-06-27
 
 ---
 
-## Current Phase: Phase 1 — Authentication (⏳ Pending)
+## Current Phase: Phase 2 — User & Creator Profiles (⏳ Pending)
 
 ---
 
@@ -12,7 +12,7 @@ Last Updated: 2026-06-27
 | Phase | Name | Status | Completed |
 |---|---|---|---|
 | 0 | Foundation | ✅ Complete | 2026-06-27 |
-| 1 | Authentication | ⏳ Pending | — |
+| 1 | Authentication | ✅ Complete | 2026-06-28 |
 | 2 | User & Creator Profiles | ⏳ Pending | — |
 | 3 | Media Storage (Cloudinary) | ⏳ Pending | — |
 | 4 | Wallet & Coin Packages | ⏳ Pending | — |

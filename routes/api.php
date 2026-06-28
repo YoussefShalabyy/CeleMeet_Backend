@@ -2,26 +2,24 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| All API routes are versioned under /api/v1/.
-|
-| Module routes are registered here as the project grows.
-| Each phase adds its own routes in this file, grouped by module.
-|
-| Naming convention: kebab-case paths, e.g. /creator-profiles, /coin-packages
-|
-*/
+use App\Modules\Auth\Controllers\AuthController;
 
 Route::prefix('v1')->group(function (): void {
 
     // ─── Phase 1: Auth ──────────────────────────────────────────────────
-    // Route::prefix('auth')->group(base_path('routes/api/auth.php'));
+    Route::prefix('auth')->group(function (): void {
+        // Guest endpoints
+        Route::post('register', [AuthController::class, 'register']);
+        Route::post('login',    [AuthController::class, 'login']);
+        Route::post('google',   [AuthController::class, 'google']);
+
+        // Authenticated endpoints
+        Route::middleware('auth:api')->group(function (): void {
+            Route::post('logout', [AuthController::class, 'logout']);
+            Route::get('me',      [AuthController::class, 'me']);
+        });
+    });
+
 
     // ─── Phase 2: Users & Creators ──────────────────────────────────────
     // Route::prefix('users')->group(base_path('routes/api/users.php'));
