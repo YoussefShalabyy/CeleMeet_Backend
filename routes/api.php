@@ -49,7 +49,22 @@ Route::prefix('v1')->group(function (): void {
     });
 
     // ─── Phase 4: Wallet ────────────────────────────────────────────────
-    // Route::prefix('wallet')->group(base_path('routes/api/wallet.php'));
+    Route::middleware('auth:api')->group(function (): void {
+        Route::prefix('wallet')->group(function (): void {
+            Route::get('/', [\App\Modules\Wallet\Controllers\WalletController::class, 'show']);
+            Route::get('transactions', [\App\Modules\Wallet\Controllers\WalletController::class, 'transactions']);
+        });
+
+        Route::prefix('coin-packages')->group(function (): void {
+            Route::get('/', [\App\Modules\Wallet\Controllers\CoinPackageController::class, 'index']);
+        });
+
+        Route::prefix('admin/coin-packages')->group(function (): void {
+            Route::post('/', [\App\Modules\Wallet\Controllers\AdminCoinPackageController::class, 'store']);
+            Route::put('{id}', [\App\Modules\Wallet\Controllers\AdminCoinPackageController::class, 'update'])->whereNumber('id');
+            Route::delete('{id}', [\App\Modules\Wallet\Controllers\AdminCoinPackageController::class, 'destroy'])->whereNumber('id');
+        });
+    });
 
     // ─── Phase 5: Payments ──────────────────────────────────────────────
     // Route::prefix('payments')->group(base_path('routes/api/payments.php'));

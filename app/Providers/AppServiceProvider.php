@@ -24,8 +24,12 @@ class AppServiceProvider extends ServiceProvider
         Model::preventLazyLoading(! app()->isProduction());
         Model::preventSilentlyDiscardingAttributes(! app()->isProduction());
 
+        \App\Models\User::observe(\App\Observers\UserObserver::class);
+
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(CreatorProfile::class, CreatorProfilePolicy::class);
         Gate::policy(\App\Models\MediaAsset::class, \App\Modules\Media\Policies\MediaPolicy::class);
+        Gate::policy(\App\Models\Wallet::class, \App\Modules\Wallet\Policies\WalletPolicy::class);
+        Gate::policy(\App\Models\CoinPackage::class, \App\Modules\Wallet\Policies\CoinPackagePolicy::class);
     }
 }

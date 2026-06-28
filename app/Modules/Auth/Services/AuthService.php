@@ -52,14 +52,6 @@ final class AuthService
                 'status'   => 'active',
             ]);
 
-            // Every user gets a wallet immediately (required for coin operations)
-            $user->wallet()->create([
-                'available_balance' => 0,
-                'held_balance'      => 0,
-                'total_earned'      => 0,
-                'total_spent'       => 0,
-            ]);
-
             return $user;
         });
 
@@ -130,14 +122,6 @@ final class AuthService
                     'email'  => $googleData['email'],
                     'role'   => 'regular',
                     'status' => 'active',
-                ]);
-
-                // Create wallet for new user
-                $user->wallet()->create([
-                    'available_balance' => 0,
-                    'held_balance'      => 0,
-                    'total_earned'      => 0,
-                    'total_spent'       => 0,
                 ]);
 
                 Log::info('New user registered via Google', ['user_id' => $user->id]);
