@@ -49,6 +49,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(Wallet::class);
     }
 
+    public function creatorProfile(): HasOne
+    {
+        return $this->hasOne(CreatorProfile::class);
+    }
+
     // ─── JWTSubject ───────────────────────────────────────────────────────────
 
     public function getJWTIdentifier(): mixed

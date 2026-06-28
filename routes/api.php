@@ -22,8 +22,25 @@ Route::prefix('v1')->group(function (): void {
 
 
     // ─── Phase 2: Users & Creators ──────────────────────────────────────
-    // Route::prefix('users')->group(base_path('routes/api/users.php'));
-    // Route::prefix('creators')->group(base_path('routes/api/creators.php'));
+
+    // User routes (authenticated)
+    Route::prefix('users')->middleware('auth:api')->group(function (): void {
+        Route::get('me',  [\App\Modules\User\Controllers\UserController::class, 'me']);
+        Route::put('me',  [\App\Modules\User\Controllers\UserController::class, 'update']);
+    });
+
+    // Creator routes — public listing + authenticated profile update
+    Route::prefix('creators')->group(function (): void {
+        Route::get('/',    [\App\Modules\Creator\Controllers\CreatorController::class, 'index']);
+        Route::get('{id}', [\App\Modules\Creator\Controllers\CreatorController::class, 'show'])->whereNumber('id');
+    });
+
+    Route::get('categories', [\App\Modules\Creator\Controllers\CreatorController::class, 'categories']);
+
+    Route::middleware('auth:api')->prefix('creator')->group(function (): void {
+        Route::put('profile', [\App\Modules\Creator\Controllers\CreatorController::class, 'update']);
+    });
+
 
     // ─── Phase 3: Media ─────────────────────────────────────────────────
     // Route::prefix('media')->group(base_path('routes/api/media.php'));
