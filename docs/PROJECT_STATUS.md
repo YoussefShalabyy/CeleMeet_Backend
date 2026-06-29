@@ -3,7 +3,7 @@ Last Updated: 2026-06-29
 
 ---
 
-## Current Phase: Phase 11 — Messaging (Stream Chat) (⏳ Pending)
+## Current Phase: Phase 12 — Voice & Video Calls (⏳ Pending)
 
 ---
 
@@ -22,7 +22,7 @@ Last Updated: 2026-06-29
 | 8 | Content: Stories | ✅ Complete | 2026-06-29 |
 | 9 | Engagement: Likes & Comments | ✅ Complete | 2026-06-29 |
 | 10 | Subscription System | ✅ Complete | 2026-06-29 |
-| 11 | Messaging (Stream Chat) | ⏳ Pending | — |
+| 11 | Messaging (Stream Chat) | ✅ Complete | 2026-06-29 |
 | 12 | Voice & Video Calls | ⏳ Pending | — |
 | 13 | Notifications | ⏳ Pending | — |
 | 14 | Creator Earnings & Withdrawals | ⏳ Pending | — |
@@ -277,6 +277,22 @@ Last Updated: 2026-06-29
 - `ExpireSubscriptionsCommand` — daily cron job registered in `routes/console.php` to prune expired subscriptions.
 - `SubscriptionPolicy` — enforces logic (e.g. creators cannot subscribe to their own plan).
 - Full suite of API endpoints for creators (manage plans) and users (subscribe, cancel, list active).
+
+### Tests: 5 passing
+
+---
+
+## Phase 11 — Messaging (Stream Chat) (✅ COMPLETE)
+
+### Key Deliverables
+- **`StreamChatAdapter`**: Uses the official `get-stream/stream-chat` PHP SDK, implementing `ChatProviderInterface`. Generates tokens and syncs users.
+- **`MessageService`**: Atomic paid messaging. Validates coin balance, deducts coins, stores `PaidMessage`, creates the Stream channel, and pushes the message to Stream. Rolls back on failure.
+- **`MessageRefundService`**: Logic for refunding unanswered messages safely.
+- **`PaidMessage` and `MessageRefund`**: Immutable models representing the financial side of chat.
+- **API Endpoints**: 
+  - `POST /api/v1/chat/token` (generate token for Expo client)
+  - `POST /api/v1/messages/send` (send a paid message)
+  - `POST /api/v1/messages/{id}/refund` (request a refund)
 
 ### Tests: 5 passing
 

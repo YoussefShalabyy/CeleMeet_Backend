@@ -10,6 +10,7 @@ use App\Contracts\NotificationProviderInterface;
 use App\Contracts\PaymentGatewayInterface;
 use App\Contracts\VideoCallProviderInterface;
 use App\Infrastructure\Chat\FakeChatProvider;
+use App\Infrastructure\Chat\StreamChatAdapter;
 use App\Infrastructure\MediaStorage\FakeMediaStorage;
 use App\Infrastructure\Notification\FakeNotificationProvider;
 use App\Infrastructure\Payment\FakePaymentGateway;
@@ -39,7 +40,19 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->bindChatProvider();
+        // ─── Chat Provider ──────────────────────────────────────────────────
+        if (config('stream.api_key') && env('CHAT_PROVIDER', 'stream') === 'stream') {
+            $this->app->singleton(ChatProviderInterface::class, function () {
+                return new StreamChatAdapter(
+                    config('stream.api_key'),
+                    config('stream.api_secret')
+                );
+            });
+        } else {
+            $this->app->singleton(ChatProviderInterface::class, FakeChatProvider::class);
+        }
+
+        // ─── Video Call Provider ─────────────────────────────────────────────
         $this->bindVideoCallProvider();
         $this->bindMediaStorage();
         $this->bindPaymentGateway();
@@ -49,14 +62,6 @@ class FoundationServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-    }
-
-    private function bindChatProvider(): void
-    {
-        $this->app->bind(
-            ChatProviderInterface::class,
-            FakeChatProvider::class,
-        );
     }
 
     private function bindVideoCallProvider(): void

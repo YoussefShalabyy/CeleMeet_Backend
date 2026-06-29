@@ -122,7 +122,12 @@ Route::prefix('v1')->group(function (): void {
     });
 
     // ─── Phase 11: Messaging ────────────────────────────────────────────
-    // Route::prefix('messages')->group(base_path('routes/api/messages.php'));
+    Route::middleware('auth:api')->group(function (): void {
+        Route::post('chat/token', [\App\Modules\Chat\Controllers\ChatController::class, 'getToken']);
+        
+        Route::post('messages/send', [\App\Modules\Chat\Controllers\ChatController::class, 'send']);
+        Route::post('messages/{id}/refund', [\App\Modules\Chat\Controllers\ChatController::class, 'refund'])->whereNumber('id');
+    });
 
     // ─── Phase 12: Calls ────────────────────────────────────────────────
     // Route::prefix('calls')->group(base_path('routes/api/calls.php'));
