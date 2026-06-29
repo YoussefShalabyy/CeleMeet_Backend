@@ -84,7 +84,7 @@ Route::prefix('v1')->group(function (): void {
         Route::get('users/me/following', [\App\Modules\User\Controllers\FollowController::class, 'following']);
     });
 
-    // ─── Phase 7: Posts ─────────────────────────────────────────────────
+    // ─── Phase 7 & 9: Posts & Engagement ───────────────────────────────
     Route::get('creators/{id}/posts', [\App\Modules\Post\Controllers\PostController::class, 'creatorPosts'])->whereNumber('id');
     
     Route::middleware('auth:api')->group(function (): void {
@@ -93,6 +93,13 @@ Route::prefix('v1')->group(function (): void {
         Route::get('posts/{id}', [\App\Modules\Post\Controllers\PostController::class, 'show'])->whereNumber('id');
         Route::put('posts/{id}', [\App\Modules\Post\Controllers\PostController::class, 'update'])->whereNumber('id');
         Route::delete('posts/{id}', [\App\Modules\Post\Controllers\PostController::class, 'destroy'])->whereNumber('id');
+
+        Route::post('posts/{id}/like', [\App\Modules\Post\Controllers\LikeController::class, 'store'])->whereNumber('id');
+        Route::delete('posts/{id}/like', [\App\Modules\Post\Controllers\LikeController::class, 'destroy'])->whereNumber('id');
+
+        Route::get('posts/{id}/comments', [\App\Modules\Post\Controllers\CommentController::class, 'index'])->whereNumber('id');
+        Route::post('posts/{id}/comments', [\App\Modules\Post\Controllers\CommentController::class, 'store'])->whereNumber('id');
+        Route::delete('comments/{id}', [\App\Modules\Post\Controllers\CommentController::class, 'destroy'])->whereNumber('id');
     });
 
     // ─── Phase 8: Stories ───────────────────────────────────────────────

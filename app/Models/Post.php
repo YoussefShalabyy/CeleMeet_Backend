@@ -42,4 +42,14 @@ class Post extends Model
     {
         return $this->morphMany(MediaAsset::class, 'owner');
     }
+
+    public function likes(): MorphMany
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

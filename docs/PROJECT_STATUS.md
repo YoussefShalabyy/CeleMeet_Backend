@@ -3,7 +3,7 @@ Last Updated: 2026-06-29
 
 ---
 
-## Current Phase: Phase 9 — Engagement: Likes & Comments (⏳ Pending)
+## Current Phase: Phase 10 — Subscription System (⏳ Pending)
 
 ---
 
@@ -20,7 +20,7 @@ Last Updated: 2026-06-29
 | 6 | Follow System | ✅ Complete | 2026-06-29 |
 | 7 | Content: Posts | ✅ Complete | 2026-06-29 |
 | 8 | Content: Stories | ✅ Complete | 2026-06-29 |
-| 9 | Engagement: Likes & Comments | ⏳ Pending | — |
+| 9 | Engagement: Likes & Comments | ✅ Complete | 2026-06-29 |
 | 10 | Subscription System | ⏳ Pending | — |
 | 11 | Messaging (Stream Chat) | ⏳ Pending | — |
 | 12 | Voice & Video Calls | ⏳ Pending | — |
@@ -248,6 +248,23 @@ Last Updated: 2026-06-29
 - `GET/DELETE /api/v1/stories/{id}` — view/delete stories.
 
 ### Tests: 7 passing
+
+---
+
+## Phase 9 — Engagement: Likes & Comments (✅ COMPLETE)
+
+### Key Deliverables
+- `Like` and `Comment` models and relationships on `User` and `Post` models. Fixed missing `avatar` relationship on `User`.
+- `LikeObserver` and `CommentObserver` — atomically sync `likes_count` and `comments_count` on the parent post to ensure perfect consistency.
+- `LikeService` — handles idempotent liking to avoid DB constraints exceptions.
+- `CommentService` — handles creating, deleting, and paginating comments.
+- `CommentPolicy` — restricts comment deletion to the author.
+- `CommentResource` — formats the comment and eagerly loads minimal user profiles.
+- `POST/DELETE /api/v1/posts/{id}/like` — like/unlike endpoints.
+- `GET/POST /api/v1/posts/{id}/comments` — comment endpoints.
+- `DELETE /api/v1/comments/{id}` — delete comment endpoint.
+
+### Tests: 6 passing
 
 ---
 

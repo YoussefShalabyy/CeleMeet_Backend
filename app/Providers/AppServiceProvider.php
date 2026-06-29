@@ -26,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
 
         \App\Models\User::observe(\App\Observers\UserObserver::class);
         \App\Models\Follow::observe(\App\Observers\FollowObserver::class);
+        \App\Models\Like::observe(\App\Observers\LikeObserver::class);
+        \App\Models\Comment::observe(\App\Observers\CommentObserver::class);
 
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(CreatorProfile::class, CreatorProfilePolicy::class);
@@ -34,5 +36,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(\App\Models\CoinPackage::class, \App\Modules\Wallet\Policies\CoinPackagePolicy::class);
         Gate::policy(\App\Models\Post::class, \App\Modules\Post\Policies\PostPolicy::class);
         Gate::policy(\App\Models\Story::class, \App\Modules\Story\Policies\StoryPolicy::class);
+        Gate::policy(\App\Models\Comment::class, \App\Modules\Post\Policies\CommentPolicy::class);
     }
 }
