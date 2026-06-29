@@ -3,7 +3,7 @@ Last Updated: 2026-06-29
 
 ---
 
-## Current Phase: Phase 12 — Voice & Video Calls (⏳ Pending)
+## Current Phase: Phase 13 — Notifications (⏳ Pending)
 
 ---
 
@@ -23,7 +23,7 @@ Last Updated: 2026-06-29
 | 9 | Engagement: Likes & Comments | ✅ Complete | 2026-06-29 |
 | 10 | Subscription System | ✅ Complete | 2026-06-29 |
 | 11 | Messaging (Stream Chat) | ✅ Complete | 2026-06-29 |
-| 12 | Voice & Video Calls | ⏳ Pending | — |
+| 12 | Voice & Video Calls | ✅ Complete | 2026-06-29 |
 | 13 | Notifications | ⏳ Pending | — |
 | 14 | Creator Earnings & Withdrawals | ⏳ Pending | — |
 | 15 | Admin Panel | ⏳ Pending | — |

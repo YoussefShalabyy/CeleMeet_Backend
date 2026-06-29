@@ -130,7 +130,12 @@ Route::prefix('v1')->group(function (): void {
     });
 
     // ─── Phase 12: Calls ────────────────────────────────────────────────
-    // Route::prefix('calls')->group(base_path('routes/api/calls.php'));
+    Route::middleware('auth:api')->group(function (): void {
+        Route::post('calls/token', [\App\Modules\Call\Controllers\CallController::class, 'getToken']);
+        
+        Route::post('calls/initiate', [\App\Modules\Call\Controllers\CallController::class, 'initiate']);
+        Route::post('calls/{id}/end', [\App\Modules\Call\Controllers\CallController::class, 'end'])->whereNumber('id');
+    });
 
     // ─── Phase 13: Notifications ────────────────────────────────────────
     // Route::prefix('notifications')->group(base_path('routes/api/notifications.php'));

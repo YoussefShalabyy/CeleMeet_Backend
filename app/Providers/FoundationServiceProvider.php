@@ -15,6 +15,7 @@ use App\Infrastructure\MediaStorage\FakeMediaStorage;
 use App\Infrastructure\Notification\FakeNotificationProvider;
 use App\Infrastructure\Payment\FakePaymentGateway;
 use App\Infrastructure\VideoCall\FakeVideoCallProvider;
+use App\Infrastructure\VideoCall\StreamVideoAdapter;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -66,10 +67,16 @@ class FoundationServiceProvider extends ServiceProvider
 
     private function bindVideoCallProvider(): void
     {
-        $this->app->bind(
-            VideoCallProviderInterface::class,
-            FakeVideoCallProvider::class,
-        );
+        if (config('stream.api_key') && env('CHAT_PROVIDER', 'stream') === 'stream') {
+            $this->app->singleton(VideoCallProviderInterface::class, function () {
+                return new StreamVideoAdapter(
+                    config('stream.api_key'),
+                    config('stream.api_secret')
+                );
+            });
+        } else {
+            $this->app->singleton(VideoCallProviderInterface::class, FakeVideoCallProvider::class);
+        }
     }
 
     private function bindMediaStorage(): void
