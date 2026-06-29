@@ -96,7 +96,12 @@ Route::prefix('v1')->group(function (): void {
     });
 
     // ─── Phase 8: Stories ───────────────────────────────────────────────
-    // Route::prefix('stories')->group(base_path('routes/api/stories.php'));
+    Route::middleware('auth:api')->group(function (): void {
+        Route::get('stories', [\App\Modules\Story\Controllers\StoryController::class, 'index']);
+        Route::post('stories', [\App\Modules\Story\Controllers\StoryController::class, 'store']);
+        Route::get('stories/{id}', [\App\Modules\Story\Controllers\StoryController::class, 'show'])->whereNumber('id');
+        Route::delete('stories/{id}', [\App\Modules\Story\Controllers\StoryController::class, 'destroy'])->whereNumber('id');
+    });
 
     // ─── Phase 10: Subscriptions ────────────────────────────────────────
     // Route::prefix('subscriptions')->group(base_path('routes/api/subscriptions.php'));

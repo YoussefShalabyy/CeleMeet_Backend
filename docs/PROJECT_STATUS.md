@@ -3,7 +3,7 @@ Last Updated: 2026-06-29
 
 ---
 
-## Current Phase: Phase 8 — Content: Stories (⏳ Pending)
+## Current Phase: Phase 9 — Engagement: Likes & Comments (⏳ Pending)
 
 ---
 
@@ -19,7 +19,7 @@ Last Updated: 2026-06-29
 | 5 | Payment & Coin Purchase | ✅ Complete | 2026-06-28 |
 | 6 | Follow System | ✅ Complete | 2026-06-29 |
 | 7 | Content: Posts | ✅ Complete | 2026-06-29 |
-| 8 | Content: Stories | ⏳ Pending | — |
+| 8 | Content: Stories | ✅ Complete | 2026-06-29 |
 | 9 | Engagement: Likes & Comments | ⏳ Pending | — |
 | 10 | Subscription System | ⏳ Pending | — |
 | 11 | Messaging (Stream Chat) | ⏳ Pending | — |
@@ -235,6 +235,22 @@ Last Updated: 2026-06-29
 
 ---
 
+## Phase 8 — Content: Stories (✅ COMPLETE)
+
+### Key Deliverables
+- `Story` model with relationships to `creator` and `media`.
+- Scheduled command: `stories:expire` runs hourly via `routes/console.php` to soft-delete expired stories.
+- Dynamic media claiming: Uploaded `MediaAsset` objects have their `owner_type` morphed to `Story::class` at creation time.
+- `StoryPolicy` — restricts updates/deletions to story owners, and restricts premium viewing.
+- `StoryService` — creates, deletes, and builds paginated feeds. Groups active stories by creator.
+- `GET /api/v1/stories` — paginated feed of active stories from followed creators.
+- `POST /api/v1/stories` — create story (expires in 24h).
+- `GET/DELETE /api/v1/stories/{id}` — view/delete stories.
+
+### Tests: 7 passing
+
+---
+
 ## Migrations Applied
 
 | Migration File | Phase | Status |
@@ -254,6 +270,7 @@ Last Updated: 2026-06-29
 | `2026_06_28_000014_create_follows_table` | Phase 6 | ✅ Applied |
 | `2026_06_28_000015_create_payment_transactions_table` | Phase 5 | ✅ Applied |
 | `2026_06_28_000016_create_posts_table` | Phase 7 | ✅ Applied |
+| `2026_06_28_000017_create_stories_table` | Phase 8 | ✅ Applied |
 
 ---
 
@@ -268,7 +285,8 @@ Last Updated: 2026-06-29
 | Phase 5 (Payment) | 4 | ✅ |
 | Phase 6 (Follow) | 11 | ✅ |
 | Phase 7 (Posts) | 10 | ✅ |
-| **Total** | **73** | **✅ All Passing** |
+| Phase 8 (Stories) | 7 | ✅ |
+| **Total** | **80** | **✅ All Passing** |
 
 ---
 

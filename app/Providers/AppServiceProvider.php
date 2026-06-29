@@ -33,5 +33,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(\App\Models\Wallet::class, \App\Modules\Wallet\Policies\WalletPolicy::class);
         Gate::policy(\App\Models\CoinPackage::class, \App\Modules\Wallet\Policies\CoinPackagePolicy::class);
         Gate::policy(\App\Models\Post::class, \App\Modules\Post\Policies\PostPolicy::class);
+        Gate::policy(\App\Models\Story::class, \App\Modules\Story\Policies\StoryPolicy::class);
     }
 }

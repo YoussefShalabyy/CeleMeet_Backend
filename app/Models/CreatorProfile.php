@@ -74,4 +74,9 @@ class CreatorProfile extends Model
     {
         return $this->hasMany(Post::class, 'creator_id', 'user_id');
     }
+
+    public function stories(): HasMany
+    {
+        return $this->hasMany(Story::class, 'creator_id', 'user_id');
+    }
 }
