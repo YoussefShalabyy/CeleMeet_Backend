@@ -79,4 +79,14 @@ class CreatorProfile extends Model
     {
         return $this->hasMany(Story::class, 'creator_id', 'user_id');
     }
+
+    public function subscriptionPlan(): HasOne
+    {
+        return $this->hasOne(SubscriptionPlan::class, 'creator_id', 'user_id');
+    }
+
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscription::class, 'creator_id', 'user_id');
+    }
 }

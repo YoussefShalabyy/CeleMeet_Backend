@@ -12,3 +12,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('stories:expire')->hourly();
+Schedule::command('subscriptions:expire')->daily();

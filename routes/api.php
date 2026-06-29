@@ -111,7 +111,15 @@ Route::prefix('v1')->group(function (): void {
     });
 
     // ─── Phase 10: Subscriptions ────────────────────────────────────────
-    // Route::prefix('subscriptions')->group(base_path('routes/api/subscriptions.php'));
+    Route::get('creators/{id}/subscription-plan', [\App\Modules\Subscription\Controllers\SubscriptionController::class, 'getCreatorPlan'])->whereNumber('id');
+
+    Route::middleware('auth:api')->group(function (): void {
+        Route::post('subscriptions', [\App\Modules\Subscription\Controllers\SubscriptionController::class, 'subscribe']);
+        Route::get('subscriptions', [\App\Modules\Subscription\Controllers\SubscriptionController::class, 'mySubscriptions']);
+        Route::delete('subscriptions/{id}', [\App\Modules\Subscription\Controllers\SubscriptionController::class, 'cancel'])->whereNumber('id');
+        
+        Route::post('creator/subscription-plan', [\App\Modules\Subscription\Controllers\SubscriptionController::class, 'updateCreatorPlan']);
+    });
 
     // ─── Phase 11: Messaging ────────────────────────────────────────────
     // Route::prefix('messages')->group(base_path('routes/api/messages.php'));

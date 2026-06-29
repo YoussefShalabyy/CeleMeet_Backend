@@ -37,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(\App\Models\Post::class, \App\Modules\Post\Policies\PostPolicy::class);
         Gate::policy(\App\Models\Story::class, \App\Modules\Story\Policies\StoryPolicy::class);
         Gate::policy(\App\Models\Comment::class, \App\Modules\Post\Policies\CommentPolicy::class);
+        Gate::policy(\App\Models\SubscriptionPlan::class, \App\Modules\Subscription\Policies\SubscriptionPolicy::class);
     }
 }

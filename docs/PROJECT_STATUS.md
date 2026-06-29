@@ -3,7 +3,7 @@ Last Updated: 2026-06-29
 
 ---
 
-## Current Phase: Phase 10 — Subscription System (⏳ Pending)
+## Current Phase: Phase 11 — Messaging (Stream Chat) (⏳ Pending)
 
 ---
 
@@ -21,7 +21,7 @@ Last Updated: 2026-06-29
 | 7 | Content: Posts | ✅ Complete | 2026-06-29 |
 | 8 | Content: Stories | ✅ Complete | 2026-06-29 |
 | 9 | Engagement: Likes & Comments | ✅ Complete | 2026-06-29 |
-| 10 | Subscription System | ⏳ Pending | — |
+| 10 | Subscription System | ✅ Complete | 2026-06-29 |
 | 11 | Messaging (Stream Chat) | ⏳ Pending | — |
 | 12 | Voice & Video Calls | ⏳ Pending | — |
 | 13 | Notifications | ⏳ Pending | — |
@@ -265,6 +265,20 @@ Last Updated: 2026-06-29
 - `DELETE /api/v1/comments/{id}` — delete comment endpoint.
 
 ### Tests: 6 passing
+
+---
+
+## Phase 10 — Subscription System (✅ COMPLETE)
+
+### Key Deliverables
+- `SubscriptionPlan` and `Subscription` models with `active()` scopes.
+- `SubscriptionService` — handles subscribing (wrapped in DB transaction), deducting coins using `WalletService`, and validating constraints.
+- `ContentAccessService` integration — explicitly wired into the new `SubscriptionService` so premium posts are legitimately gated behind active subscriptions.
+- `ExpireSubscriptionsCommand` — daily cron job registered in `routes/console.php` to prune expired subscriptions.
+- `SubscriptionPolicy` — enforces logic (e.g. creators cannot subscribe to their own plan).
+- Full suite of API endpoints for creators (manage plans) and users (subscribe, cancel, list active).
+
+### Tests: 5 passing
 
 ---
 

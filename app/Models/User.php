@@ -76,6 +76,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Comment::class);
     }
 
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscription::class, 'subscriber_id');
+    }
+
     // ─── JWTSubject ───────────────────────────────────────────────────────────
 
     public function getJWTIdentifier(): mixed

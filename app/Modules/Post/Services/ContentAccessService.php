@@ -12,6 +12,10 @@ class ContentAccessService
      * In Phase 7, this is stubbed to return true only if the user is the creator.
      * In Phase 10 (Subscriptions), this will check the `subscriptions` table.
      */
+    public function __construct(
+        private readonly \App\Modules\Subscription\Services\SubscriptionService $subscriptionService
+    ) {}
+
     public function canViewPremium(int $userId, int $creatorId): bool
     {
         // Creators can always view their own premium content
@@ -19,7 +23,6 @@ class ContentAccessService
             return true;
         }
 
-        // TODO: Phase 10 - Check if $userId has an active subscription to $creatorId
-        return false;
+        return $this->subscriptionService->isSubscribed($userId, $creatorId);
     }
 }
