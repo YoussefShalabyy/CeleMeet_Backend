@@ -85,7 +85,15 @@ Route::prefix('v1')->group(function (): void {
     });
 
     // ─── Phase 7: Posts ─────────────────────────────────────────────────
-    // Route::prefix('posts')->group(base_path('routes/api/posts.php'));
+    Route::get('creators/{id}/posts', [\App\Modules\Post\Controllers\PostController::class, 'creatorPosts'])->whereNumber('id');
+    
+    Route::middleware('auth:api')->group(function (): void {
+        Route::get('posts', [\App\Modules\Post\Controllers\PostController::class, 'index']);
+        Route::post('posts', [\App\Modules\Post\Controllers\PostController::class, 'store']);
+        Route::get('posts/{id}', [\App\Modules\Post\Controllers\PostController::class, 'show'])->whereNumber('id');
+        Route::put('posts/{id}', [\App\Modules\Post\Controllers\PostController::class, 'update'])->whereNumber('id');
+        Route::delete('posts/{id}', [\App\Modules\Post\Controllers\PostController::class, 'destroy'])->whereNumber('id');
+    });
 
     // ─── Phase 8: Stories ───────────────────────────────────────────────
     // Route::prefix('stories')->group(base_path('routes/api/stories.php'));

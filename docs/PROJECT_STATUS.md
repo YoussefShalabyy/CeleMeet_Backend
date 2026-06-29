@@ -3,7 +3,7 @@ Last Updated: 2026-06-29
 
 ---
 
-## Current Phase: Phase 7 — Content: Posts (⏳ Pending)
+## Current Phase: Phase 8 — Content: Stories (⏳ Pending)
 
 ---
 
@@ -18,7 +18,7 @@ Last Updated: 2026-06-29
 | 4 | Wallet & Coin Packages | ✅ Complete | 2026-06-28 |
 | 5 | Payment & Coin Purchase | ✅ Complete | 2026-06-28 |
 | 6 | Follow System | ✅ Complete | 2026-06-29 |
-| 7 | Content: Posts | ⏳ Pending | — |
+| 7 | Content: Posts | ✅ Complete | 2026-06-29 |
 | 8 | Content: Stories | ⏳ Pending | — |
 | 9 | Engagement: Likes & Comments | ⏳ Pending | — |
 | 10 | Subscription System | ⏳ Pending | — |
@@ -219,6 +219,22 @@ Last Updated: 2026-06-29
 
 ---
 
+## Phase 7 — Content: Posts (✅ COMPLETE)
+
+### Key Deliverables
+- `Post` model with relationships to `creator` and `media` (polymorphic).
+- Dynamic media claiming: Uploaded `MediaAsset` objects have their `owner_type` morphed to `Post::class` at creation time.
+- `ContentAccessService` — stubs the logic for gating premium content (to be fully integrated with `subscriptions` in Phase 10).
+- `PostPolicy` — restricts updates/deletions to post owners, and restricts premium viewing.
+- `PostService` — creates, updates, deletes, and builds paginated feeds. Updates `creator_profiles.posts_count` atomically.
+- `GET /api/v1/posts` — paginated feed of followed creators.
+- `POST /api/v1/posts` — create post (free/premium).
+- `PUT/DELETE /api/v1/posts/{id}` — update/delete posts.
+
+### Tests: 10 passing
+
+---
+
 ## Migrations Applied
 
 | Migration File | Phase | Status |
@@ -237,6 +253,7 @@ Last Updated: 2026-06-29
 | `2026_06_28_000009_create_coin_packages_table` | Phase 4 | ✅ Applied |
 | `2026_06_28_000014_create_follows_table` | Phase 6 | ✅ Applied |
 | `2026_06_28_000015_create_payment_transactions_table` | Phase 5 | ✅ Applied |
+| `2026_06_28_000016_create_posts_table` | Phase 7 | ✅ Applied |
 
 ---
 
@@ -250,7 +267,8 @@ Last Updated: 2026-06-29
 | Phase 4 (Wallet) | 18 | ✅ |
 | Phase 5 (Payment) | 4 | ✅ |
 | Phase 6 (Follow) | 11 | ✅ |
-| **Total** | **63** | **✅ All Passing** |
+| Phase 7 (Posts) | 10 | ✅ |
+| **Total** | **73** | **✅ All Passing** |
 
 ---
 
